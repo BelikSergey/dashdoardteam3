@@ -10,6 +10,11 @@ const Landing = lazy(() =>
     './pages/Landing/Landing.js' /*webpackChunkName: "landing-page"*/
   ),
 );
+const LandingReg = lazy(() =>
+  import(
+    './pages/Landing/LandingReg.js'
+  ),
+);
 const CardPage = lazy(() =>
   import(
     './pages/CardPage.js' /*webpackChunkName: "card-page"*/
@@ -31,6 +36,10 @@ const App = () => (
           exact
           path={routes.landing}
           component={Landing}
+        />
+        <Route
+          path={routes.landingReg}
+          component={LandingReg}
         />
         <Route path={routes.card} component={CardPage} />
         <Route component={NotFoundPage} />

@@ -126,8 +126,8 @@ line-height: 45px;
     display: flex;
     position: absolute;
     width: 290px;
-height: 18px;
-top: 374px;
+    height: 18px;
+    top: 374px;
     border:none;
     border-bottom: 1px solid #00D7FF;  
     color: #00D7FF; 
@@ -137,14 +137,34 @@ top: 374px;
 
    @media (min-width: 768px) {
     .inputPassword {
-width: 193px;
-top: 265px;
-  }}
+      width: 193px;
+      top: 265px;
+    }}
 
   @media (min-width: 1280px) {
     .inputPassword {
       width: 196px;
       top: 320px;
+   }}
+
+   .registration {
+    display: flex;
+    position: absolute;
+    top: 275px;
+    left: 210px;
+    font-size: 14px;
+   }
+   @media (min-width: 768px) {
+    .registration {
+      font-size: 15px;
+      top: 178px;
+      left: 270px;
+  }}
+  @media (min-width: 1280px) {
+    .registration {
+      font-size: 17px;
+      top: 232px;
+    left: 360px;
    }}
 
    .button {

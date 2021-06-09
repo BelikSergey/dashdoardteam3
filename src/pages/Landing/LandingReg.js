@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import LandingClasses from  './Landing.css';
 
-export default class Landing extends Component {
+export default class LandingReg extends Component {
     render() {
         return (
             <div>
@@ -12,7 +12,7 @@ export default class Landing extends Component {
                 <h1 className="title">Questify will turn your life into <br/>
                     a thrilling game full of amazing<br/>
                     quests and exciting challenges.</h1>
-                <h2 className="appeal">Write your email address to log in</h2>
+                <h2 className="appeal">Write your email address to register</h2>
                   
                 <form autoComplete="off">
                 <label>
@@ -30,8 +30,6 @@ export default class Landing extends Component {
                   placeholder='Password' 
                   className="inputPassword"/>
                   </label>
-
-                  <a href="/reg" className="registration">registration</a>
 
                   <button 
                   type="submit" 
