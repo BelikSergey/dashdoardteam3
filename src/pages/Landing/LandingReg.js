@@ -1,8 +1,29 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import {authOperations} from '../../redux/auth';
 import LandingClasses from  './Landing.css';
 
-export default class LandingReg extends Component {
+class LandingReg extends Component {
+    state = {
+        email: '',
+        password: '',  
+       };
+    
+       handleChange = ({target: {name, value}}) => {
+           this.setState({[name]: value});
+       };
+    
+       handleSubmit = e => {
+           e.preventDefault();
+
+           this.props.onRegister(this.state);
+    
+           this.setState({ email: '', password: ''});
+       }
+    
     render() {
+        const { email, password } = this.state;
+
         return (
             <div>
                 <section className="page">
@@ -14,22 +35,25 @@ export default class LandingReg extends Component {
                     quests and exciting challenges.</h1>
                 <h2 className="appeal">Write your email address to register</h2>
                   
-                <form autoComplete="off">
-                <label>
+                <form 
+                onSubmit={this.handleSubmit}
+                autoComplete="off">
+                
                   <input 
                   type="email"
                   name="email" 
+                  value={email}
+                  onChange={this.handleChange}
                   placeholder='Email' 
                   className="inputEmail"/>
-                  </label>
 
-                  <label>
                   <input 
                   type="password" 
                   name="password"
+                  value={password}
+                  onChange={this.handleChange}
                   placeholder='Password' 
                   className="inputPassword"/>
-                  </label>
 
                   <button 
                   type="submit" 
@@ -38,6 +62,14 @@ export default class LandingReg extends Component {
                   </div>
                   </section>
             </div>
-        )
+        );
     }
 }
+
+//const mapStateToProps = (state) => ({})
+
+const mapDispatchToProps = {
+    onRegister: authOperations.register,
+}
+
+export default connect(null, mapDispatchToProps)(LandingReg);

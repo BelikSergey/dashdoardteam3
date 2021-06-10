@@ -4,22 +4,24 @@ import routes from './routes';
 import './App.css';
 import './fonts.css';
 
-
 const Landing = lazy(() =>
   import(
     './pages/Landing/Landing.js' /*webpackChunkName: "landing-page"*/
   ),
 );
+
 const LandingReg = lazy(() =>
   import(
     './pages/Landing/LandingReg.js'
   ),
 );
+
 const CardPage = lazy(() =>
   import(
     './pages/CardPage.js' /*webpackChunkName: "card-page"*/
   ),
 );
+
 const NotFoundPage = lazy(() =>
   import(
     './pages/NotFound.js' /*webpackChunkName: "notFound-page"*/
@@ -28,8 +30,6 @@ const NotFoundPage = lazy(() =>
 
 const App = () => (
   <>
-
-
     <Suspense fallback={<h1>Loader...</h1>}>
       <Switch>
         <Route
@@ -47,6 +47,5 @@ const App = () => (
     </Suspense>
   </>
 );
-
 
 export default App;
