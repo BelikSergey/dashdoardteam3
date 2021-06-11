@@ -36,6 +36,7 @@ const authPersistConfig = {
 const store = configureStore({
   reducer: {
     auth: persistReducer(authPersistConfig, authReducer),
+    //auth: authReducer,
     cards: cardsReducer,
   },
   middleware,
