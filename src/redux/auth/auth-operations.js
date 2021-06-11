@@ -1,7 +1,6 @@
 import axios from 'axios';
 import authActions from './auth-actions';
 
-//axios.defaults.baseURL = 'https://questify-backend.goit.global/';
 axios.defaults.baseURL = 'https://goit-backend-23.herokuapp.com/';
 
 const token = {

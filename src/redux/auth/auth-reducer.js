@@ -5,14 +5,14 @@ import authActions from './auth-actions';
 const initialUserState = { email: null };
 
 const user = createReducer(initialUserState, {
-  [authActions.registerSuccess]: (_, { payload }) => payload.user,
-  [authActions.loginSuccess]: (_, { payload }) => payload.user,
+  [authActions.registerSuccess]: (_, { payload }) => payload.data.user,
+  [authActions.loginSuccess]: (_, { payload }) => payload.data.user,
   [authActions.logoutSuccess]: () => initialUserState,
 });
 
 const token = createReducer(null, {
-  [authActions.registerSuccess]: (_, { payload }) => payload.token,
-  [authActions.loginSuccess]: (_, { payload }) => payload.token,
+  [authActions.registerSuccess]: (_, { payload }) => payload.data.token,
+  [authActions.loginSuccess]: (_, { payload }) => payload.data.token,
   [authActions.logoutSuccess]: () => null,
 });
 
