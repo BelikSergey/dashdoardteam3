@@ -54,16 +54,10 @@ const time = [
 ];
 
 export default function DataTimeChelengeModal({
-//<<<<<<< animation-maksym-1
-  setFinishDate,
-  setTime,
-  changeState,
-//=======
   timeCameFromProps,
   dataCameFromProps,
   onTimeChange,
   onDataChange,
-//>>>>>>> master
 }) {
   const [isActive, setIsActive] = useState(false);
   const [calendarValue, setCalendarValue] = useState(
@@ -109,9 +103,7 @@ export default function DataTimeChelengeModal({
       <div className="chelenge-timer-container">
         <div
           className="chelenge-timer-input"
-          onClick={() =>
-            changeState(setIsActive, !isActive)
-          }
+          onClick={() => setIsActive(!isActive)}
         >
           <div className="chelenge-timer-placeholder">
             <div>{DayOfWeek}, &nbsp;</div>
@@ -145,9 +137,7 @@ export default function DataTimeChelengeModal({
               <div
                 className="chelenge-timer-item"
                 key={item}
-                onClick={() =>
-                  changeState(onTimeclick, item)
-                }
+                onClick={() => onTimeclick(item)}
               >
                 {item}
               </div>

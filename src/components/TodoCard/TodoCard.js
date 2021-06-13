@@ -1,6 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { CSSTransition } from 'react-transition-group';
-import { useSelector, useDispatch } from 'react-redux';
+
 import { useDispatch } from 'react-redux';
 
 import { cardsOperations } from '../../redux/cards';
@@ -33,26 +32,19 @@ export default function CustomSelect(props) {
   // const [isActive, setIsActive] = useState(false);
 
   // Типы level: Easy, Normal, Hard
+  // eslint-disable-next-line
   const [difficulty, setDifficulty] = useState('Normal');
 
   // Основное состояние карточки: create, edit, incomplete, done
-  const [status, setStatus] = useState('create');
+  const [status, setStatus] = useState('incomplete');
 
-  // Начат chelenge или нет, для изменения фона карточки,
-  // звездочка или кубок, и надписи CHALLENGE
+  // Начат chelenge или нет, для изменения фона карточки, звездочка или кубок, и надписи CHALLENGE
   const [isChallengeStarted, setIsChallengeStarted] =
-//<<<<<<< animation-maksym-1
-    useState(false);
-
-  // Тип карточки Challenge или Todo
-  const [type, setType] = useState('Todo');
-//=======
     useState(props.type === 'Challenge');
 
   const [type, setType] = useState(
     props.type === 'Challenge' ? 'Challenge' : 'Task',
   );
-//>>>>>>> master
 
   // Для внесения (изменения) и отрисовки наименования тудушки
   const [title, setTitle] = useState(
@@ -64,6 +56,7 @@ export default function CustomSelect(props) {
   // const [startDate, setStartDate] = useState('');
 
   // Дата окончания
+  // eslint-disable-next-line
   const [finishDate, setFinishDate] = useState(new Date());
   const [timer, setTime] = useState(props.time || '00:00');
 
@@ -84,28 +77,13 @@ export default function CustomSelect(props) {
   const [isCategoryActive, setIsCategoryActive] =
     useState(false);
 
-//<<<<<<< animation-maksym-1
-  // Отображается ли картинка по выполнению задачи
-  const [isDoneImgShown, setIsDoneImgShown] =
-    useState(false);
-
-  const categories = [
-    { name: 'Stuff', color: '#B9C3C8' },
-    { name: 'Family', color: '#FFE6D3' },
-    { name: 'Health', color: '#CDF7FF' },
-    { name: 'Learning', color: '#FFF6C0' },
-    { name: 'Leisure', color: '#F8D2FF' },
-    { name: 'Work', color: '#D3F6CE' },
-  ];
-//=======
-//>>>>>>> master
   // Внесение значений инпута в стэйт
   const handleChangeInpute = e => {
     setTitle(e.target.value);
   };
-
   const onSetTypeOfTastOrChallenge = function () {
     setIsChallengeStarted(!isChallengeStarted);
+
     setType(
       (isChallengeStarted && 'Task') ||
         (!isChallengeStarted && 'Challenge'),
@@ -113,8 +91,11 @@ export default function CustomSelect(props) {
   };
 
   // Начать редактировать карточку при клике на нее
-  const handleEdit = () => {
+  const handleEdit = e => {
     if (status !== 'incomplete') {
+      return;
+    }
+    if (e.target.getAttribute('class') === s.starCupIcon) {
       return;
     }
     setStatus('edit');
@@ -137,7 +118,6 @@ export default function CustomSelect(props) {
       func(arg);
     }
   };
-
   const onSubmit = useCallback(
     ({ title, difficulty, category, date, time, type }) =>
       dispatch(
@@ -218,41 +198,6 @@ export default function CustomSelect(props) {
 
   // ----------------------------------------------------
   return (
-//<<<<<<< animation-maksym-1
-    <>
-      <div
-        className={
-          !isChallengeStarted
-            ? s.todoCard
-            : `${s.todoCard} ${s.dark}`
-        }
-        onClick={handleEdit}
-      >
-        {/* Отображение картинки по окончанию выполнения */}
-
-        {isDoneImgShown ? (
-          <CSSTransition
-            in={isDoneImgShown}
-            timeout={250}
-            classNames={{
-              enter: s['animeCompleted-enter'],
-              enterActive: s['animeCompleted-enter-active'],
-            }}
-          >
-            <div className={s.completedContainer}>
-              <p
-                className={`${s.phraseCompleted} ${
-                  type === 'Challenge' && s.white
-                }`}
-              >
-                COMPLETED:
-                <span className={s.cutTitle}>{` ${title
-                  .split(' ')
-                  .slice(0, 3)
-                  .join(' ')}...`}</span>
-              </p>
-              <svg className={s.completedIcon}>
-//=======
     <div
       className={
         !isChallengeStarted
@@ -279,25 +224,19 @@ export default function CustomSelect(props) {
               </svg>
             ) : (
               <svg className={s.starCupIcon}>
-//>>>>>>> master
                 <use
-                  href={`${sprite}#${
-                    type === 'Todo'
-                      ? 'completed-todo'
-                      : 'completed-challenge'
-                  }`}
+                  href={`${sprite}#star-blue`}
+                  onClick={onSetTypeOfTastOrChallenge}
                 ></use>
               </svg>
-              <p
-                className={s.continue}
-                onClick={() =>
-                  setIsDoneImgShown(!isDoneImgShown)
-                }
-              >
-                Continue
+            )}
+          </div>
+          {/* Надпись CHALLENGE, EDIT CHALLENGE, CREATE NEW QUEST или EDIT QUEST */}
+          <div className={s.operationContainer}>
+            {status === 'create' ? (
+              <p className={s.operation}>
+                CREATE NEW QUEST
               </p>
-//<<<<<<< animation-maksym-1
-//=======
             ) : null}
             {status === 'edit' && !isChallengeStarted ? (
               <p className={s.operation}>EDIT QUEST</p>
@@ -370,143 +309,20 @@ export default function CustomSelect(props) {
                   </li>
                 ))}
               </ul>
-//>>>>>>> master
             </div>
-          </CSSTransition>
-        ) : (
-          <CSSTransition
-            in={isDoneImgShown}
-            timeout={250}
-            classNames={{
-              exit: s['animeCard-exit'],
-              exitActive: s['animeCard-exit-active'],
-            }}
+          ) : null}
+          <div
+            className={`${s.selectedCategoryContainer} ${
+              isCategoryActive && s.hidden
+            }`}
+            onClick={() =>
+              changeState(
+                setIsCategoryActive,
+                !isCategoryActive,
+              )
+            }
+            style={{ backgroundColor: category.color }}
           >
-//<<<<<<< animation-maksym-1
-            <div className={s.mainCardContainer}>
-              <div className={s.topContainer}>
-                {/* Иконки кубка и звезды */}
-                <div className={s.levelStarCupContainer}>
-                  <DifficultLevelModal
-                    difficultlevel={setDifficulty}
-                    changeState={changeState}
-                  />
-                  {isChallengeStarted ? (
-                    <svg className={s.starCupIcon}>
-                      <use
-                        href={`${sprite}#cup-blue`}
-                        onClick={onSetTypeOfTastOrChallenge}
-                      ></use>
-                    </svg>
-                  ) : (
-                    <svg className={s.starCupIcon}>
-                      <use
-                        href={`${sprite}#star-blue`}
-                        onClick={onSetTypeOfTastOrChallenge}
-                      ></use>
-                    </svg>
-                  )}
-                </div>
-                {/* Надпись CHALLENGE, EDIT CHALLENGE, CREATE NEW QUEST или EDIT QUEST */}
-                <div className={s.operationContainer}>
-                  {status === 'create' ? (
-                    <p className={s.operation}>
-                      CREATE NEW QUEST
-                    </p>
-                  ) : null}
-                  {status === 'edit' &&
-                  !isChallengeStarted ? (
-                    <p className={s.operation}>
-                      EDIT QUEST
-                    </p>
-                  ) : null}
-                  {isChallengeStarted &&
-                  status !== 'edit' ? (
-                    <p className={s.operation}>CHALLENGE</p>
-                  ) : null}
-                  {isChallengeStarted &&
-                  status === 'edit' ? (
-                    <p className={s.operation}>
-                      EDIT CHALLENGE
-                    </p>
-                  ) : null}
-                  {status === 'done' ||
-                  status === 'incomplete' ? (
-                    <br
-                      className={`${s.operation} ${s.hidden}`}
-                    ></br>
-                  ) : null}
-                </div>
-                {/* Инпут или наименование карточки */}
-                {status === 'create' ||
-                status === 'edit' ? (
-                  <input
-                    className={`${s.title} ${s.inline}`}
-                    name="todo"
-                    type="text"
-                    value={title}
-                    onChange={handleChangeInpute}
-                  />
-                ) : (
-                  <p
-                    className={`${s.title} ${
-                      isChallengeStarted && s.white
-                    }`}
-                  >
-                    {title}
-                  </p>
-                )}
-                {/* Дата и время */}
-                {isChallengeStarted ? (
-                  <DataTimeChelengeModal
-                    setTime={setTime}
-                    setFinishDate={setFinishDate}
-                    changeState={changeState}
-                  />
-                ) : (
-                  <DataTimeModal
-                    setTime={setTime}
-                    setFinishDate={setFinishDate}
-                    changeState={changeState}
-                  />
-                )}
-              </div>
-
-              <div className={s.bottomContainer}>
-                {/* Группы карточек */}
-                {isCategoryActive ? (
-                  <div
-                    className={s.categoryContainer}
-                    onClick={() =>
-                      setIsCategoryActive(!isCategoryActive)
-                    }
-                  >
-                    <ul className={s.categoryList}>
-                      {categories.map(item => (
-                        <li
-                          key={item.name}
-                          onClick={() => setCategory(item)}
-                        >
-                          {item.name.toUpperCase()}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ) : null}
-                <div
-                  className={`${
-                    s.selectedCategoryContainer
-                  } ${isCategoryActive && s.hidden}`}
-                  onClick={() =>
-                    changeState(
-                      setIsCategoryActive,
-                      !isCategoryActive,
-                    )
-                  }
-                  style={{
-                    backgroundColor: category.color,
-                  }}
-//=======
             <p className={s.selectedCategory}>
               {category.name.toUpperCase()}
             </p>
@@ -550,75 +366,17 @@ export default function CustomSelect(props) {
                 <svg
                   className={`${s.saveClearDoneIcon} ${s.clearIcon}`}
                   alt="cross red"
-//>>>>>>> master
                 >
-                  <p className={s.selectedCategory}>
-                    {category.name.toUpperCase()}
-                  </p>
-                </div>
-                {/* Иконки save, clear, done и кнопка START*/}
+                  <use
+                    href={`${sprite}#cross-red-clear`}
+                  ></use>
+                </svg>
                 <div
-                  className={s.saveClearDoneStartContainer}
+                  className={s.startButton}
+                  onClick={() => setStatus('incomplete')}
                 >
-                  {status === 'edit' && (
-                    <>
-                      <svg
-                        className={`${s.saveClearDoneIcon} ${s.saveIcon}`}
-                        onClick={onReadyClick}
-                      >
-                        <use
-                          href={`${sprite}#diskette-save`}
-                        ></use>
-                      </svg>
-                      <svg
-                        className={`${s.saveClearDoneIcon} ${s.clearIcon}`}
-                        alt="cross red"
-                      >
-                        <use
-                          href={`${sprite}#cross-red-clear`}
-                        ></use>
-                      </svg>
-                      <svg
-                        className={`${s.saveClearDoneIcon} ${s.doneIcon}`}
-                        alt="check mark"
-                        onClick={() => {
-                          setStatus('done');
-                          setIsDoneImgShown(true);
-                        }}
-                      >
-                        <use
-                          href={`${sprite}#check-mark`}
-                        ></use>
-                      </svg>
-                    </>
-                  )}
-                  {status === 'create' && (
-                    <>
-                      <svg
-                        className={`${s.saveClearDoneIcon} ${s.clearIcon}`}
-                        alt="cross red"
-                      >
-                        <use
-                          href={`${sprite}#cross-red-clear`}
-                        ></use>
-                      </svg>
-                      <div
-                        className={s.startButton}
-                        onClick={() =>
-                          setStatus('incomplete')
-                        }
-                      >
-                        START
-                      </div>
-                    </>
-                  )}
+                  START
                 </div>
-//<<<<<<< animation-maksym-1
-              </div>
-            </div>
-          </CSSTransition>
-        )}
-//=======
               </>
             )}
           </div>
@@ -632,8 +390,7 @@ export default function CustomSelect(props) {
           title={`Delete this ${type}?`}
           onRemove={props.onRemove}
         ></Modal>
-//>>>>>>> master
       </div>
-    </>
+    </div>
   );
 }

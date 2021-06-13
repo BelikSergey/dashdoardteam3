@@ -14,7 +14,6 @@ $desctop: 1280px;
 
 .todoCard {
   display: flex;
-  justify-content: center;
   position: relative;
   max-width: calc(#{$mobile} - 30px);
   margin: 15px;
@@ -56,10 +55,8 @@ $desctop: 1280px;
   display: flex;
   justify-content: center;
   margin-top: 28px;
-  height: 14px;
   @media screen and (min-width: $tablet) {
     margin-top: 20px;
-    height: 12px;
   }
 }
 .operation {
@@ -75,7 +72,6 @@ $desctop: 1280px;
 .title {
   text-align: center;
   margin: 10px 0 10px 0;
-  padding: 0;
   width: 100%;
   max-height: 44px;
   font-size: 20px;
@@ -169,65 +165,4 @@ $desctop: 1280px;
   @media screen and (min-width: $tablet) {
     font-size: 14px;
   }
-}
-.completedContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 19px 18px 15px 17px;
-}
-.phraseCompleted {
-  font-size: 13px;
-  @media screen and (min-width: $tablet) {
-    font-size: 11px;
-  }
-}
-.cutTitle {
-  font-size: 14px;
-  color: #00d7ff;
-  text-decoration: underline;
-  @media screen and (min-width: $tablet) {
-    font-size: 12px;
-  }
-}
-.completedIcon {
-  width: 203px;
-  height: 182px;
-  // margin-top: 10px;
-  color: #b9c3c8;
-  @media screen and (min-width: $tablet) {
-    width: 144px;
-    height: 124px;
-    margin-top: 10px;
-  }
-}
-.continue::after {
-  content: ' →';
-  color: #00d7ff;
-}
-.continue {
-  font-size: 14px;
-  line-height: 0px;
-  color: #b9c3c8;
-  @media screen and (min-width: $tablet) {
-    font-size: 12px;
-  }
-}
-.animeCompleted-enter {
-  opacity: 0;
-  transform: scale(0, 0);
-}
-.animeCompleted-enter-active {
-  opacity: 1;
-  transform: scale(1, 1);
-  transition: all 250ms linear;
-}
-.animeCard-exit {
-  opacity: 0;
-  transform: scale(0, 0);
-}
-.animeCard-exit-active {
-  opacity: 1;
-  transform: scale(1, 1);
-  transition: all 250ms linear;
 }
