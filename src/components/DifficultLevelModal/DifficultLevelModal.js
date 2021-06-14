@@ -21,6 +21,7 @@ const levels = [
 export default function DifficultLevelModal({
   difficultlevelCameFromProps,
   onDifficltChange,
+  changeState,
 }) {
   const filteredLevel = levels.find(
     level => level.level === difficultlevelCameFromProps,
@@ -48,7 +49,7 @@ export default function DifficultLevelModal({
     <div className="dropdown-container">
       <div
         className="dropdown-input"
-        onClick={() => setIsActive(!isActive)}
+        onClick={() => changeState(setIsActive, !isActive)}
       >
         <div className="dropdown-placeholder">
           <div

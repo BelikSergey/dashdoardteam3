@@ -58,6 +58,7 @@ export default function DataTimeChelengeModal({
   dataCameFromProps,
   onTimeChange,
   onDataChange,
+  changeState,
 }) {
   const [isActive, setIsActive] = useState(false);
   const [calendarValue, setCalendarValue] = useState(
@@ -103,7 +104,9 @@ export default function DataTimeChelengeModal({
       <div className="chelenge-timer-container">
         <div
           className="chelenge-timer-input"
-          onClick={() => setIsActive(!isActive)}
+          onClick={() =>
+            changeState(setIsActive, !isActive)
+          }
         >
           <div className="chelenge-timer-placeholder">
             <div>{DayOfWeek}, &nbsp;</div>
